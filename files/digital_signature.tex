@@ -1,0 +1,111 @@
+
+% Einleitung
+\section{Digital Signature}
+Fundamentals:
+\begin{liste}
+  \item	\textbf{Authentication}: Who sent the message. It's really him?
+  \item \textbf{Integrity}: Is the message still the same what the sender sent.
+  \item \textbf{None-repudiation}: an entity cannot deny having signed it.
+\end{liste}
+
+
+\subsection{RSA  Signature}
+The RSA signature is build as in chapter \ref{sec::CrypCod_Asymmetric Crypto} - \nameref{sec::CrypCod_Asymmetric Crypto} on page 
+\pageref{sec::CrypCod_Asymmetric Crypto}.
+\subsubsection{Attacks to RSA Signature}
+\subsubsubsection{Man in the Middle/ Authentication of public key}: 
+Is one of the most common and dangerous attacks. The base of this attacks is that the attacker is sending you his public key and 
+tell you it's the original key. Then he forward all the traffic (key exchange data) from him to the original page. 
+He can now listen to all the crypted traffic.\\
+\subsubsubsection{No message attack}: For this the attacker generate a arbitrary number $s$ an compute the the message $m=s^e\mod n$
+The message $m$ has yet no structure, no useful content, but it's signed by Alice. To avoid this, the message should have some redundancy as hash value,
+checksum, etc.\\
+\subsubsubsection{Common modulus attack}: $c_e=m^f \mod n \quad c_f=m^f \mod n$, known: $c_e,c_f,(n,f),(n,e)$ then $1=x \cdot e + y \cdot f$
+$\rightarrow (c_e)^x \cdot (c_f)^y=(m^e)^x \cdot (m^f)^y=m^{ex+yf} \equiv m^1 \mod n$.
+
+\subsubsubsection{Multiplicative Property of RSA}: 
+\begin{aufzaehlung}
+\item The attacker would like Alice to sign message m without showing the true content to her.
+\item He chooses any $m_1$ with $gcd(m_1,n)=1$
+\item He computes $m_2 = m \cdot m_1^{-1} \mod n$
+\item He asks Alice to sign $m_1 \& m_2$ and receives $s_1 \& s_2$
+\item $s=s_1 \cdot s_2 \mod n \equiv (m_1\cdot m_2)^d \mod n \equiv m^d \mod n$ is the valid signature of m
+\end{aufzaehlung}
+Some redundancy in the messages can avoid this attacks. Also Alice should sign some ``random'' messages.
+
+\subsection{DSA Digital Signature Algorithm}
+
+Generate a public key $(\bm {p,q,g,y})$ and the secret key $x:$
+\begin{aufzaehlung}
+\item select a prime number $\bm q$ with exact 160 binary digits $(2^{159}< \bm q < 2^{160})$
+\item select a prime number $\bm p$ between 512 and 1024 binary digits $(2^{511+64t}< \bm p < 2^{512+64t})$
+\item select a number $1< h<\bm p$ and compute $\bm g = h^{\frac{p-1}{q}} \mod p$ if g=1 repeat this step.
+(compute a generator of subgroup of order $q \mod p$)
+\item select a random integer $1 \leq \bm x \leq \bm q-1$
+\item compute $\bm y=\bm g^{\bm x} \mod \bm p$
+\end{aufzaehlung}
+Sign a hash $h(m):$ and return signature $(\bm {r,s})$
+\begin{aufzaehlung}
+\item Select a random integer $0< k<q$
+\item $\bm r = (\bm g^k \mod \bm p) \mod \bm q$
+\item $s=(k^{-1} \cdot (h(m) + \bm x\cdot \bm r))\mod \bm q$
+\end{aufzaehlung}
+Verification with public key $(\bm {p,q,g,y})$ and signature $(\bm {r,s})$:
+\begin{aufzaehlung}
+\item check if $\bm r \& \bm s$ is in range $<\bm q$
+\item $w=(s^{-1})\mod\bm q$
+\item $u_1=( w\cdot h(m)) \mod \bm q$
+\item $u_2=( w \cdot \bm r) \mod\bm q$
+\item $\bm v=((\bm g^{u_1}\bm y^{u_2})\mod \bm  p) \mod \bm q$
+\item if $\bm v= \bm r \Rightarrow$ Accept it!
+\end{aufzaehlung}
+
+
+
+\subsection{ElGamal}
+Find primitive roots in a given field $\mathbb{F}_p$.
+\begin{aufzaehlung}
+\item Factor $p-1=p_1^{e1} \cdot p_2^{e2} \ldots p_k^{ek}$
+\item Choose a random element $\alpha$ in $\mathbb{F}_p$ with $2 \leq \alpha \leq p-1$
+\item For $i$ from 1 to $k$:
+Compute $b=\alpha ^{\frac{p-1}{p_i}} \mod p \Rightarrow$ if $b=1$, go to step before.
+\item Return $\alpha$
+\end{aufzaehlung}
+
+Generate a key $a$ in $\mathbb{F}_p$.\\.
+\begin{aufzaehlung}
+\item Chosse a prime $p$ and determine a primitive root $\alpha$
+\item Select a random integer a with $1 \leq a \leq p-2$
+\item Compute $y=\alpha^a \mod p$
+\item The public key consists of $p$, $\alpha$ and y. The secret key is $a$.
+\end{aufzaehlung}
+
+ElGamal Signature Generation, requirement: $(\mathbb{F}_p, a, \alpha)$
+\begin{aufzaehlung}
+  	\item  Select a random secret integer $k$, $1 \leq k \leq ggT(k,p-1)=1$ 
+  	\item  Compute $r=\alpha^k \mod p$ 
+  	\item  Compute $k^{-1} \mod (p-1)$
+  	\item  Compute $s=k^{-1} \cdot \lbrack h(m) - a \cdot r \rbrack \mod (p-1)$
+  	\item  The signature consists of r and s.
+\end{aufzaehlung}
+
+Verification of the signature $(r,s)$
+\begin{aufzaehlung}
+  \item   Obtain the public key $(p,\alpha,y)$
+  \item   Verify that $1 \leq r \leq p-1$. If not, then reject the signature.
+  \item   Compute $v_1=y^r \cdot r^s$
+  \item   Compute $h(m)$ and $v_2=\alpha^{h(m)} \mod p$
+  \item   Accept the signature $(r,s)$ if and only if $v_1=v_2$
+\end{aufzaehlung}
+
+\subsection{Public Key Infrastructure-PKI}
+The \em Public Key Infrastructure \em is used to verify which certificate a user can trust and which not.\\
+\subsubsubsection{Direct Trust}: 
+In this model, a user just trust people which he meed and changed their the public key. \\
+\subsubsubsection{Hierachical Trust}: A \em meta introducer \em (root CA) certify other trusted introducer. The public key of the meta introducer 
+already installed on the web browser, operation system, etc. \\
+\subsubsubsection{Web of Trust}: It's based on references. You have some user you know and \em trust \em and you know that 
+they check the new references quite well. So you'll accept a ceritficate which he accepted also.\\
+Other user you accept the certificate but you trust just \em marginal \em. So a new certificate needs trusted by many such people until you trust it.\\
+Then there are user you doesn't trust (\em untrusted user \em)
+

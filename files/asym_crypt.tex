@@ -1,0 +1,27 @@
+\section{Asymmetric (Public Key) Cryptography}
+\label{sec::CrypCod_Asymmetric Crypto}
+\begin{tabular}{|l| p{14.7cm}|}
+	\hline
+	Diffie-Hellmann				 	& 	Choose a large public prime $p$ and a generator $a \in GF(p)$.\\
+	Key Exchange					&	1. $A$ chooses a large random integer $x$, computes $a^x \mod p = c_1$ and sends the result to $B$. \\
+									&	2. $B$ chooses a large random integer $y$, computes $a^y \mod p = c_2$ and sends the result to $A$. \\
+									&	3. $A$ and $B$ compute each the secret key: $A: c_2^x \mod p=k $ and $B: c_1^y \mod p=k \to k=a^{xy} \mod p$.\\
+									& 	The security is base on the assumption that the discrete logarithm $x=\log_{a}(c_1)$ hard to compute is.\\
+									&	This assumption will be definitely wrong for quantum computer!!!\\
+	\hline
+	RSA public key 					&	$p$ and $q$ are primes \\
+	cryptosystem key				&	$n=pq$ and $ed\equiv 1 \mod \varphi(n) \Rightarrow e d = \varphi(n) \cdot i + 1$\\
+	generation:						&	public key: $(n,e)$, secret key: $(n,d), p,q, \varphi(n)$\\
+									\cline{2-2}
+									&	1. $A$ looks up the pulbic key $(n,e)$ of $B$\\
+	encryption/decryption:			&	2. $A$ encrypt message $m \to c$: $c \equiv m^e \mod n$.\\
+									&	3. $A$ sends the ciphertext $c$ to $B$.\\
+									&	4. $B$ decrypts $c$ by computing $m\equiv c^d \mod n \equiv (m^{e})^d \equiv  m^{\varphi(n) \cdot i + 1} \equiv  \left(m^{\varphi(n)}\right)^i \cdot m \mod n$\\
+									&	$\xrightarrow[m^{\varphi(n)} \mod n\equiv 1]{\text{little Fermat}} m \mod n \equiv m $\\
+									\cline{2-2}
+	signature						&	$s=m^d \mod n$ only owner of $(n,d)$ can compute this.\\
+									&	$m=s^e \mod n$ every with public $(n,e)$ can compute this.\\
+									&	$\Rightarrow$ often only the hash $h(m)$ is signated. Attention: 
+										collisions $h(m_1)=h(m_2)$.\\
+	\hline
+\end{tabular}

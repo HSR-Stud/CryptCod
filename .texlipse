@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Tue Nov 13 19:36:18 CET 2012
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=CryptCod.tex
+outputFile=CryptCod.pdf
+langSpell=en
+markDer=true
+srcDir=
