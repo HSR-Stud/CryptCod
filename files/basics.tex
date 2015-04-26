@@ -114,7 +114,9 @@ $g^e=g^{\sum c_i 2^i}=\prod_{i=0}^k \left(g^{2^i}\right)^{e_i}$
 $6^{2^1} \mod 100 = 36;\quad 6^{2^2} \mod 100 \equiv 36^2  \mod 100 \equiv -4;\quad  6^{2^3} \mod 100 \equiv {-4}^2 \mod 100 \equiv 16; \ldots$
 \item Berechne das Produkt der Zweierpotenzen: $6^{2^0}\cdot6^{2^3}\cdot6^{2^6}\mod 100\equiv 36 \cdot 16 \cdot -4 \equiv 16$
 \end{aufzaehlung}
-Mit Hilfe des \em Square and Multiply \em wird der Rechenaufwand auf $\log_2(e)$ Potenzen und auf $1/2 \log_2(e)$ Multiplikationen reduziert.
+Mit Hilfe des \em Square and Multiply \em wird der Rechenaufwand auf $\log_2(e)$ Potenzen und auf $1/2 \log_2(e)$ Multiplikationen reduziert. \\
+Falls man beim Berechnen der Zweierpotenzen an die Grenzen des Rechner stösst, dann kann man die Potenz unterteilen und in zwei Schritte berechnen 
+(Bsp. $6^{2^{10}}=(6^{32})^{32} \mod 100$).
 
 \subsection{Glossar}
 \begin{minipage}{12.5cm}
