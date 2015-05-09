@@ -41,9 +41,9 @@ Definitions:\\
 						&						&	$s=0 \Rightarrow r$ is a valid code word \\
 						&	$s(X)=r(X)\mod g(X)$	& $g(X)$: generator polynom \\
 	\hline
-	$P_{corr}$			&	$P_{corr}=\displaystyle\sum_{i=0}^{n}=\alpha_i \cdot p^i \cdot (1-p)^{n-i}$		& $p$: bit error probability\\
-						&																					& $i$: Hamming weight of the pattern\\
-						&																					& $\alpha$: number of pattern with the same Hamming weight\\
+	$P_{corr}$			&	$P_{corr}=\displaystyle\sum_{i=0}^{n} \alpha_i \cdot p^i \cdot (1-p)^{n-i}$		& $p$: bit error probability\\
+	Prob. of correctly	&																					& $i$: Hamming weight of the pattern\\
+	decoded vector		&																					& $\alpha$: number of pattern with the same Hamming weight\\
 	\hline 
 \end{tabular}\\
 Hint: The minimum distance of a linear block code is equal to the minimum weight of its nonzero code words.\\
