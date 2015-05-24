@@ -70,7 +70,7 @@ The code word $u$ must exhibit two properties:
   \item It must be a code word: $p(X)=X^{n-k}\cdot m(X) \mod g(X)$ \\
   \item $g(X)$ has the degree $n-k$ and must represent a valid code word
   \item The degree of $p(X)$ is always less than $n-k$
-  \item $c=[p,m]$ (codeword)
+  \item $u=[p,m]$ (codeword)
   \item $s(X)=r(X)\mod g(X)$ (syndrom)
   \item $h(x)=X^n+1 : g(X)$ (check polynom)\\
         $H=\begin{bmatrix} 	
@@ -113,6 +113,7 @@ $\alpha \to$ roots of the primitive polynomial.\\
    						   		\vdots	&	 &					&			& \vdots \\   						 
    						   		1 & \alpha^r & (\alpha^r)^2	& \ldots	& (\alpha^r)^{n-1}  \\   		
    			\end{bmatrix}$\\
+			Note that the binary parity check matrix always starts with the LSB on top and MSB on bottom, e.g. $1=\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}$ \\
 \end{liste}
 
 \subsection{RS Codes - Reed Solomon}
