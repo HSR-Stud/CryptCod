@@ -17,6 +17,11 @@ was dann die Decodierung besser macht.\\
 \hspace{5mm}
 	\includegraphics[width=6cm]{./bilder/covolutionStateDiagram.png}
 \end{minipage}
+\\
+\textbf{Generator Sequences}\\
+Die Generatorsequenzen erhält man dadurch, dass eine einzelne Eins (...000000100000...) an 
+den Eingang gegeben wird. Somit lauten die Generatorsequenzen für obiges Blockdiagram:\\
+$g^{(1)}=(1 1 1)$ resp. $g^{(2)}=(1 0 1)$
 
 \subsubsection{Decodierung}
 Eine gute Variante die FaltungsCodes zu dekodieren ist dies mit einem Trellis
@@ -26,14 +31,25 @@ Diagram zu machen: \\
 		\item Zuerst Punkte entsprechend der m\"oglichen Speicherinhalte einzeichnen.
 		\item M\"ogliche Verbindungen einzeichnen.
 		\item Sollwerte einzeichnen (z.B. 0/00).
-		\item Fehler zu den einzelnen Punkten eintragen (ev. die Euklidische Distanz).
+		\item Fehler zu den einzelnen Punkten eintragen (ev. die Euklidische Distanz). Wird auch Zustandsmetrik genannt.
 		\item Wenn zwei Wege zu einem Punkt kommen, den h\"oherwertigen Weg streichen.
 		\item Am Schluss den Weg nehmen der den kleinsten Fehler ergibt.
 	\end{liste}
 \end{minipage}
 \begin{minipage}{9cm}
 	\includegraphics[width=9cm]{./bilder/Trelli.png}
-\end{minipage}
+\end{minipage}\\
+\textbf{Soft Decoding}\\
+Im Falle von Soft Decoding, liefert  der Demodulator eine reelle Zahl zwischen 0 und 1. Mit der quadrierten 
+eklidischen Distanz kann man dann die Zustandsmetriken wie folgt berechnen: \\
+$M_{000}[k]=min(M_{000}[k-1]+(r_1[k]-v_1[k])^2+(r_2[k]-v_2[k])^2; M_{001}[k-1]+(r_1[k]-v_1[k])^2+(r_2[k]-v_2[k])^2)$ \\
+Beispiel:\\
+$M_{000}[k-1]=3.5$ und $M_{001}[k-1]=3.0$ und $r_1[k]=0.5$ und $r_2[k]=0.9$\\
+Angenommen der Zustand bei $[k-1]$ war $M_{000}$, dann ist der Zustandübergang 0/00. Falls der Zustandswechsel 
+hingegen von $M_{001}$ kommt, dann ist der Zustandsübergang 0/11. Somit ergibt sich:\\
+$M_{000}[k]=min(3.5+(0.5-0)^2+(0.9-0)^2; 3.0+(0.5-1)^2+(0.9-1)^2)=min(4.56; 3.26)=3.26$ \\
+
+
 
 \subsubsection{Euklidische Distanz}
 \begin{minipage}{13cm}
