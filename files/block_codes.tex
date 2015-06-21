@@ -142,9 +142,9 @@ e.g. (7,3)R-S code $(n=7, k=3 \Rightarrow 2t=4 \Rightarrow 2$ bit error correcti
 \item $\bm u(X)=\alpha^0 + \alpha^2 X + \alpha^4 X^2 + \alpha^6 X^3+ \alpha^1 X^4 + \alpha^3 X^5 + \alpha^5 X^6$
 \end{liste}
 A correct code word is always a multiply of $\bm g(X)$ and has $2t$ zeros in the ``frequency space''. If not, this bit's represent the error pattern. 
-To recalculate the \em error pattern \em the ``inverse DFT- inverse frequency transformation'' 
-$e_i(X)=\frac{1}{n}\sum\limits_{k=1}^n E_k(X) \alpha^{i \cdot k}=\bm E(\alpha^i)$ has to used of the  error pattern $\bm E= \bm R - \bm U$.\\
-An less power intensive variant is the \em Berlekamp-Massey Algorithm \em. It finds the shortest linear feedback shift register which generate the 
+To recalculate the \em error pattern \em the ``inverse DFT- inverse discrete fourier transformation'' 
+$e_i(X)=\frac{1}{n}\sum\limits_{k=1}^n E_k(X) \alpha^{i \cdot k}=\bm E(\alpha^i)$ has to be used of the error pattern $\bm E= \bm R - \bm U$.\\
+A less power intensive variant is the \em Berlekamp-Massey Algorithm \em. It finds the shortest linear feedback shift register which generate the 
 whole error pattern out of the last $2t$ frequency symbols $R_{n-2t},\ldots,R_{n-1}$ (If there are less then t errors.).
 
 \begin{minipage}{9cm}
@@ -167,4 +167,23 @@ $v=V \cdot A^{-1}$\\
     	\vdots					&						&			& \vdots			\\
     	\alpha^{(n-1)\cdot 0}	& \alpha^{(n-1)\cdot 1}	&	\ldots	&\alpha^{(n-1)\cdot (n-1)}	\\
     \end{bmatrix}$  \\    
+\end{minipage}\\
+Define the dimension of the Matrix $A_{nxn}$ resp. of $A_{nxn}^{-1}$: $n = 2^m - 1 = q - 1$. Fill in the Matrix according to the above scheme and then 
+calculate and simplify the exponent$\mod n$ (Example): $\alpha^{-4}=\alpha^2 \mod 3=\alpha + 1 \mod 3$. Note: $A \cdot A^{-1}=1$\\
+
+\begin{minipage}{9cm}
+	\textbf{Example of DFT calculation for Vector $v$}\\
+	$V = v \cdot A = (1,\alpha,1+\alpha) \cdot \begin{bmatrix}
+			1	&	1			&	1 \\
+			1	&	1+\alpha	&	\alpha	\\
+			1	&	\alpha		& 	1+\alpha \\
+			\end{bmatrix}=(0,0,1)$
+\end{minipage}
+\begin{minipage}{9cm}		
+	\textbf{Example of IDFT calculation for Vector $V$}\\
+	$v = V \cdot A^{-1} = (0,0,1) \cdot \begin{bmatrix}
+			1	&	1			&	1 \\
+			1	&	\alpha		&	1+\alpha	\\
+			1	&	1+\alpha	&	\alpha \\
+			\end{bmatrix}=(1,\alpha,1+\alpha)$
 \end{minipage}
