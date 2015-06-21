@@ -69,8 +69,10 @@ $g \in \mathbb{Z}, \quad e \in \mathbb{N}, \quad p \in \mathbb{N} \rightarrow$ k
 Ordnung von $g \mod p$.\\
 $g^n \mod m \equiv 1 $ wenn $n=k\cdot e$\\
 $g^l = g^k$ wenn $l\equiv k \mod e$\\ 
-$\beta = q^i \mod p \Rightarrow \beta =$ Erzeugndes modulo p wenn $gcd(p-1,i)=1$ (coprime)\\
-$g$ ist Erzeugendes (generator) modulo $p$, falls die Menge der Elemente $g^i;1 \leq i \leq p-1$ gleich der Menge $\{1,\ldots,p-1\}$ ist.
+$\beta = g^i \mod p \Rightarrow \beta =$ Generator modulo p wenn $gcd(p-1,i)=1$ (coprime)\\
+$g$ ist Generator modulo $p$, falls $g^i;1 \leq i \leq p-1$ die Zahlen $\{1,\ldots,p-1\}$ erzeugt. \\
+Equivalent gilt: $g$ ist ein Generator modulo $p$, falls die Ordnung von $g\mod p$ gleich $p-1$ ist (also $e=p-1$).\\
+Die Anzahl Generatoren modulo $p$ berechnet sich mit $\varphi(p-1)$
 
 \subsection{Chinese Remainder Theorem}
 \begin{minipage}{8cm}
