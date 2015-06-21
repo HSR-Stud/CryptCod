@@ -4,8 +4,9 @@
 \section{Eliptic Curve}
 $y^2=x^3+a\cdot x+b \quad a,b,x,y \in \mathbb{R}$\\
 The negative of a point $P \equiv (x_p, y_p)$ is its reflection on the x-axis $\to$ $-P \equiv (x_p, -y_p)$.\\
+Note: When in $\mathbb{F}_p$, all calculations are done with $\mod p$. Point at infinity $\mathcal{O}$ is additive identity of the elliptic curve group.
 
-\subsection{Additon}
+\subsection{Addition}
 \begin{minipage}{12.5cm}
 Add two Points on an Elliptic Curve. This is possible, if $4a^3+27b^2\neq0$
 (Group patterns possible).\\
@@ -14,7 +15,7 @@ Geometric: 1. line through $P,Q \to$ intersection point $(-R)$. 2. Mirror on x-a
 $m=\begin{cases}
 \frac{3 \cdot x_p^2 + a}{2 \cdot y_P} & $ If $ P = Q\\
 \frac{y_P-y_Q}{x_P-x_Q}               & $ If $ P \neq Q, P \neq -Q\\
-\end{cases}$
+\end{cases}$ 
 
 
 $x_R = m^2 -x_p -x_q$ \\
@@ -23,11 +24,16 @@ $\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = 
 
 Number of points on the elliptic curve $E(\mathbb{F}_p)$: $\#E(\mathbb{F}_p)=p+1-t$ with $|t| \leq 2 \cdot \sqrt{p}$ \\
 For large $p$:  $\#E(\mathbb{F}_p) \approx p $ \\
+For small $p$:  Calculate all the possible points of the curve and add $\mathcal{O}$.
 
 \end{minipage}
 \begin{minipage}{5.5cm}
   \includegraphics[width=5.5cm]{./bilder/elipticCurve.png}\\
-\end{minipage}
+\end{minipage} \\
+
+The order of a point $P$ can be found by point multiplication: $n \cdot P=P+P+...+P$ for $n$ times $\to n$ is the smallest non-negative integer for which $n \cdot P=\mathcal{O}$. 
+When calculating a new point, if $m\to \infty$ then the new point is at infinity, i.e. $\mathcal{O}$.
+
 \subsection{Elliptic Curve Domain Parameters}
 \begin{tabular}{l l p{11cm}}
 	$T=(p,a,b,G,n,h)$	&	$p$		&	a prime $p$ specifying the finite field $\mathbb{F}_p$ \\
