@@ -32,7 +32,7 @@ Definitions:\\
 	Error Correction	&	$t=[\frac{d_{min}-1}{2}]$	& $t$: number of correctable error bits\\
 	\hline
 	Parity Check Matrix	&	$u \cdot H^T = \vec{0}$			& $H$: parity check matrix, $(n-k) \times n$-matrix\\
-						&	$u \cdot H^T = m \cdot G \cdot H^T = \vec{0}$ & \\
+						&	$u \cdot H^T = m \cdot G \cdot H^T = \vec{0}$ & only for valid codeword $u$ \\
 						&	$G \cdot H^T = \vec{0}$  \\
 	\hline
 	Syndrom testing		&	$s=r \cdot H^T$		&	$s$: syndrom \\
@@ -115,6 +115,13 @@ $\alpha \to$ roots of the primitive polynomial.\\
    			\end{bmatrix}$\\
 			Note that the binary parity check matrix always starts with the LSB on top and MSB on bottom, e.g. $1=\begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}$ \\
 \end{liste}
+
+\textbf{Check if $u$ is valid codeword} \\
+Variant 1:\\
+If $u \cdot H^T = \vec{0}$, then $u$ is a valid codeword.\\
+
+Variant 2 (not always applicable):\\
+Example with $u=( 1 0 0 1 1 1 0 )\Rightarrow u(X)=1+X^3+X^4+X^5 \Rightarrow u(\alpha)=1+\alpha^2+1+\alpha^2+\alpha+1+\alpha+1=0 \Rightarrow u$ is a valid codeword. 
 
 \subsection{RS Codes - Reed Solomon}
 Reed-Salomon Codes are cyclic $(n, n-2t)$-Codes, which code symbols $u_i$ are not binary digits but elements of $GF(q)$. However, if $q=2^m$, then every code symbol
