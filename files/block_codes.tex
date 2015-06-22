@@ -117,8 +117,8 @@ $\alpha \to$ roots of the primitive polynomial.\\
 \end{liste}
 
 \subsection{RS Codes - Reed Solomon}
-The code symbols $u_i$ are not binary digits but elements of $GF(q)$. However, if $q=2^m$, then every code symbol
-can be represented by a binary vector of length m.\\
+Reed-Salomon Codes are cyclic $(n, n-2t)$-Codes, which code symbols $u_i$ are not binary digits but elements of $GF(q)$. However, if $q=2^m$, then every code symbol
+can be represented by a binary vector of length m. The number of correctable bits is given by $t$.\\
 
 
 To build a systematic code with $k$-data symbols $(\bm m(X))$, $2t$ parity symbols and totally $k+2t=n$ symbols:
@@ -177,11 +177,11 @@ calculate and simplify the exponent$\mod n$ (Example): $\alpha^{-4}=\alpha^2 \mo
 			1	&	1			&	1 \\
 			1	&	1+\alpha	&	\alpha	\\
 			1	&	\alpha		& 	1+\alpha \\
-			\end{bmatrix}=(0,0,1)$
+			\end{bmatrix}=(0,1,0)$
 \end{minipage}
 \begin{minipage}{9cm}		
 	\textbf{Example of IDFT calculation for Vector $V$}\\
-	$v = V \cdot A^{-1} = (0,0,1) \cdot \begin{bmatrix}
+	$v = V \cdot A^{-1} = (0,1,0) \cdot \begin{bmatrix}
 			1	&	1			&	1 \\
 			1	&	\alpha		&	1+\alpha	\\
 			1	&	1+\alpha	&	\alpha \\
