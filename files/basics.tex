@@ -49,7 +49,7 @@ $a \equiv b \mod m$ and $c \equiv d \mod m \to a=b+k \cdot m$; $k \in \mathbb{N}
 Definition: $a \cdot x \equiv 1 \mod m \Rightarrow x \equiv a^{-1} \mod m$\\
 Tatsache: $x$ existiert genau, wenn $gcd(a,m)=1$\\
 Trick: $1 = a \cdot x + m \cdot y \Rightarrow 1 \equiv a \cdot x \mod m$ (use \em Extended Euclid (a,m) \em)\\
-BSP: $a = 16, b = 13; a^{-1} \mod b \equiv 5$ \\
+BSP: $a = 16, m = 13; a^{-1} \mod m \equiv 5$ \\
 \tr{inv(a,m)}{$a^{-1}$}
 
 \subsection{Fermat's little Theorem}
@@ -75,17 +75,17 @@ Equivalent gilt: $g$ ist ein Generator modulo $p$, falls die Ordnung von $g\mod 
 Die Anzahl Generatoren modulo $p$ berechnet sich mit $\varphi(p-1)$
 
 \subsection{Chinese Remainder Theorem}
-\begin{minipage}{8cm}
 Wird verwendet um ein Gleichungssystem zu l\"osen: \\
+\begin{minipage}{4cm}
 $x \equiv a_1 \mod m_1$\\
 $x \equiv a_2 \mod m_2$\\
 $\ldots$\\
 $x \equiv a_n \mod m_n$\\
 \end{minipage}
-\begin{minipage}{9cm}
+\begin{minipage}{14cm}
 $m=\displaystyle\prod_{i=1}^{n} m_i, \quad M_i=m/m_i, \quad gcd(m_i, M_i)=1, 1 \leq i \leq n$\\
-$y_iM_i \equiv 1 \mod m_i \to$ \tr{eucl($m_i,M_i$)}{$\{.., y_i,.. \}$}, \\
-$x=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m_1 m_2 \ldots $
+$y_iM_i \equiv 1 \mod m_i \to y_i\equiv M_i^{-1} \mod m_i \to$ \tr{eucl($M_i,m_i$)}{$\{.., y_i,.. \}$}, \\
+$x=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m $
 \end{minipage}\\
 \\
 \begin{minipage}{5cm}
@@ -96,15 +96,15 @@ $x\equiv a_1 \mod m_1 = 10 \mod 13$\\
 $x=?$
 \end{minipage}
 \begin{minipage}{5cm}
-$m=m_1 m_2 m3 = 7\cdot 11 \cdot 13 = 1001$\\
+$m=m_1 m_2 m_3 = 7\cdot 11 \cdot 13 = 1001$\\
 $M_1=m/m_1=11 \cdot 13 = 143$\\
 $M_2=m/m_2=7 \cdot 13 = 91$\\
 $M_3=m/m_3=7 \cdot 11 = 77$\\
 \end{minipage}
 \begin{minipage}{8cm}
-Mit extended euclid: (e.g. $y_1=exteucl(m_1,M_1)$)\\
+Mit extended euclid: (e.g. $y_1=exteucl(M_1,m_1)$)\\
 $y_1=5;  y_2=4; y_3=12$; $M_1 y_1 \equiv 1 \mod m_1$\\
-$\bm x\equiv a_1\cdot y_1\cdot M_1+a_2\cdot y_2\cdot M_2+a_3\cdot y_3\cdot M_3 (mod m)$\\
+$\bm x\equiv a_1\cdot y_1\cdot M_1+a_2\cdot y_2\cdot M_2+a_3\cdot y_3\cdot M_3 (\mod m)$\\
 $\bm x\equiv 5\cdot5\cdot143+3\cdot4\cdot91+10\cdot12\cdot77 \equiv \bm{894} \mod 1001$\\
 Check $\Rightarrow 894 \mod 7 \equiv 5; \quad 894 \mod 11 \equiv 3;$ etc.
 \end{minipage}
@@ -161,12 +161,15 @@ Falls man beim Berechnen der Zweierpotenzen an die Grenzen des Rechner stösst, 
 \end{minipage} \\
 
 \subsection{Polynom division}
-\begin{minipage}{12.5cm}
-	\includegraphics[width=12cm]{./bilder/polynomdivision.png}\\
+\begin{minipage}{10.5cm}
+	\includegraphics[width=10cm]{./bilder/polynomdivision.png}\\
 \end{minipage}
-\begin{minipage}{6cm}
-	Polynom division can be used to determine whether a given polynom is irreducible or not, i.e. if the division with another polynom has a rest r(x) or not.
-	In this example, the calculation is done in $GF(2)$, meaning that negative values are equivalent to positive values.
+\begin{minipage}{8cm}
+	Polynom division can be used to determine whether a given polynomial is irreducible or not, i.e. if the division with any other polynomial (up to the half 
+	order of the dividend polynomial) has a rest $r(X)$ or not. In this example, the calculation is done in $GF(2)$, meaning that negative values are 
+	equivalent to positive values. In this case $r(X)\neq 0$ and the given polynomial is irreducible.\\
+	A polynomial that is not divisible by any polynomial of degree 1 and 2, is also not divisible by any polynomial of higher degree, because a factorization 
+	would yield a divisor of degree 1 or 2, respectively.\\
 \end{minipage}
 
 
