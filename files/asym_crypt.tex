@@ -9,15 +9,17 @@
 									& 	The security is base on the assumption that the discrete logarithm $x=\log_{a}(c_1)$ hard to compute is.\\
 									&	This assumption will be definitely wrong for quantum computer!!!\\
 	\hline
-	RSA public key 					&	$p$ and $q$ are primes \\
-	cryptosystem key				&	$n=pq$ and $ed\equiv 1 \mod \varphi(n) \Rightarrow e d = \varphi(n) \cdot i + 1$\\
-	generation:						&	public key: $(n,e)$, secret key: $(n,d), p,q, \varphi(n)$\\
+	RSA public key 					&	$p$ and $q$ are primes (possibly large)\\
+	cryptosystem key				&	$n=p\cdot q$. Encryption key is $e$, decryption key is $d$\\
+	generation:						&	Choose an integer $1<e<\varphi(n)$ such that $gcd(e,\varphi(n))=1$\\
+									&	Find $d$ such that $e\cdot d\equiv 1 \mod \varphi(n) \Rightarrow e\cdot d = \varphi(n) \cdot i + 1$\\
+									&	public key: $(n,e)$, secret key: $(n,d), p,q, \varphi(n)$\\
 									\cline{2-2}
 									&	1. $A$ looks up the pulbic key $(n,e)$ of $B$\\
 	encryption/decryption:			&	2. $A$ encrypt message $m \to c$: $c \equiv m^e \mod n$.\\
 									&	3. $A$ sends the ciphertext $c$ to $B$.\\
 									&	4. $B$ decrypts $c$ by computing $m\equiv c^d \mod n \equiv (m^{e})^d \equiv  m^{\varphi(n) \cdot i + 1} \equiv  \left(m^{\varphi(n)}\right)^i \cdot m \mod n$\\
-									&	$\xrightarrow[m^{\varphi(n)} \mod n\equiv 1]{\text{little Fermat}} m \mod n \equiv m $\\
+									&	$\xrightarrow[m^{\varphi(n)} \mod n\equiv 1]{\text{little Fermat}} m \mod n \equiv m $  (use square and multiply for large $c$ and $m$)\\
 									\cline{2-2}
 	signature						&	$s=m^d \mod n$ only owner of $(n,d)$ can compute this.\\
 									&	$m=s^e \mod n$ every with public $(n,e)$ can compute this.\\
