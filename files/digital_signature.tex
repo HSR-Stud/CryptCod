@@ -82,9 +82,9 @@ Generate a key $a$ in $\mathbb{F}_p$.\\.
 
 ElGamal Signature Generation, requirement: $(\mathbb{F}_p, a, \alpha)$
 \begin{aufzaehlung}
-  	\item  Select a random secret integer $k$, $1 \leq k \leq ggT(k,p-1)=1$ 
+  	\item  Select a random secret integer $k$, $1 \leq k \leq gcd(k,p-1)=1$ 
   	\item  Compute $r=\alpha^k \mod p$ 
-  	\item  Compute $k^{-1} \mod (p-1)$
+  	\item  Compute $k^{-1} \mod (p-1) \to$ (with extended Euclid)
   	\item  Compute $s=k^{-1} \cdot \lbrack h(m) - a \cdot r \rbrack \mod (p-1)$
   	\item  The signature consists of r and s.
 \end{aufzaehlung}
@@ -93,10 +93,13 @@ Verification of the signature $(r,s)$
 \begin{aufzaehlung}
   \item   Obtain the public key $(p,\alpha,y)$
   \item   Verify that $1 \leq r \leq p-1$. If not, then reject the signature.
-  \item   Compute $v_1=y^r \cdot r^s$
+  \item   Compute $v_1=y^r \cdot r^s \mod p$
   \item   Compute $h(m)$ and $v_2=\alpha^{h(m)} \mod p$
   \item   Accept the signature $(r,s)$ if and only if $v_1=v_2$
 \end{aufzaehlung}
+
+\textbf{Possible Attacks:} If an attacker knows the randomly chosen integer $k$, he could multiply $s$ with $k$ and would then be able to compute the secret key $a$.
+
 
 \subsection{Public Key Infrastructure-PKI}
 The \em Public Key Infrastructure \em is used to verify which certificate a user can trust and which not.\\
