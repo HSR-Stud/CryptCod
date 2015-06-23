@@ -22,17 +22,41 @@ $x_R = m^2 -x_p -x_q$ \\
 $y_R = m(x_P-x_R)-y_p$\\
 $\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = P, \quad P+ (-P) = \mathcal{O}, \quad \mathcal{O}$: point at infinity.\\ 
 
-Number of points on the elliptic curve $E(\mathbb{F}_p)$: $\#E(\mathbb{F}_p)=p+1-t$ with $|t| \leq 2 \cdot \sqrt{p}$ \\
-For large $p$:  $\#E(\mathbb{F}_p) \approx p $ \\
-For small $p$:  Calculate all the possible points of the curve and add $\mathcal{O}$.
-
 \end{minipage}
 \begin{minipage}{5.5cm}
   \includegraphics[width=5.5cm]{./bilder/elipticCurve.png}\\
 \end{minipage} \\
 
+\subsection{Number of Points and Order of a Point}
+In cryptology elliptic curves with a high number of points are preferred.
+Number of points on the elliptic curve $E(\mathbb{F}_p)$: $\#E(\mathbb{F}_p)=p+1-t$ with $|t| \leq 2 \cdot \sqrt{p}$ \\
+For large $p$:  $\#E(\mathbb{F}_p) \approx p $ \\
+For small $p$:  Calculate all the possible points of the curve and add $\mathcal{O}$.\\
+\begin{minipage}{8cm}
+	Example: $E=(y^2+x^3-1)$ over $\mathbb{F}_5$\\
+	\begin{tabular}{|l |l|}
+		\hline
+		Possible values for $y$	&	Possible values for $x$\\
+		\hline
+		$0^2 \mod 5 = 0$		&	$0^3 - 1 \mod 5 = 4$\\
+		\hline
+		$1^2 \mod 5 = 1$		&	$1^3 - 1 \mod 5 = 0$\\
+		\hline
+		$2^2 \mod 5 = 4$		&	$2^3 - 1 \mod 5 = 2$\\
+		\hline
+		$3^2 \mod 5 = 4$		&	$3^3 - 1 \mod 5 = 1$\\
+		\hline
+		$4^2 \mod 5 = 1$		&	$4^3 - 1 \mod 5 = 3$\\
+		\hline
+	\end{tabular}
+\end{minipage}
+\begin{minipage}{10cm}
+	As for the X-Values we got some results corresponding on the Y-side, we can combine them to evaluate the points of the curve: (0/2, (0/3), (1/0), (3/1), (3/4), $\mathcal{O}$.
+	So, in total the given curve has 6 points.\\
+\end{minipage}\\
+
 The order of a point $P$ can be found by point multiplication: $n \cdot P=P+P+...+P$ for $n$ times $\to n$ is the smallest non-negative integer for which $n \cdot P=\mathcal{O}$. 
-When calculating a new point, if $m\to \infty$ then the new point is at infinity, i.e. $\mathcal{O}$.
+When calculating a new point, if $m\to \infty$ then the new point is at infinity, i.e. $\mathcal{O}$.\\
 
 \subsection{Elliptic Curve Domain Parameters}
 \begin{tabular}{l l p{11cm}}
