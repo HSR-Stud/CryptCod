@@ -72,10 +72,10 @@ Compute $b=\alpha ^{\frac{p-1}{p_i}} \mod p \Rightarrow$ if $b=1$, go to step be
 \item Return $\alpha$
 \end{aufzaehlung}
 
-Generate a key $a$ in $\mathbb{F}_p$.\\.
+Generate a key $a$ in $\mathbb{F}_p$.
 \begin{aufzaehlung}
 \item Chosse a prime $p$ and determine a primitive root $\alpha$
-\item Select a random integer a with $1 \leq a \leq p-2$
+\item Select a random secret integer $a$ with $1 \leq a \leq p-2$
 \item Compute $y=\alpha^a \mod p$
 \item The public key consists of $p$, $\alpha$ and y. The secret key is $a$.
 \end{aufzaehlung}
