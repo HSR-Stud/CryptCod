@@ -26,7 +26,7 @@ $gcd(78,99)=3=14 \cdot 78 - 11 \cdot 99$\\
 \subsection{Eulers Phi-Function $\varphi(n)$}
 Sie gibt f\"ur jede nat\"urliche Zahl $n$ an, wie viele zu $n$ teilerfremde positve 
 ganze Zahlen es gibt, die nicht gr\"osser als $n$ sind.\\
-\tr{fi(n)}{$\varphi(n)$}\\ 
+\tr{ephi(n)}{$\varphi(n)$}\\ 
 
 \begin{tabular}{| l l l |}
 	\hline
@@ -49,7 +49,7 @@ $a \equiv b \mod m$ and $c \equiv d \mod m \to a=b+k \cdot m$; $k \in \mathbb{N}
 Definition: $a \cdot x \equiv 1 \mod m \Rightarrow x \equiv a^{-1} \mod m$\\
 Tatsache: $x$ existiert genau, wenn $gcd(a,m)=1$\\
 Trick: $1 = a \cdot x + m \cdot y \Rightarrow 1 \equiv a \cdot x \mod m$ (use \em Extended Euclid (a,m) \em)\\
-BSP: $a = 16, b = 13; a^{-1} \mod b \equiv 5$ \\
+BSP: $a = 16, m = 13; a^{-1} \mod m \equiv 5$ \\
 \tr{inv(a,m)}{$a^{-1}$}
 
 \subsection{Fermat's little Theorem}
@@ -69,52 +69,58 @@ $g \in \mathbb{Z}, \quad e \in \mathbb{N}, \quad p \in \mathbb{N} \rightarrow$ k
 Ordnung von $g \mod p$.\\
 $g^n \mod m \equiv 1 $ wenn $n=k\cdot e$\\
 $g^l = g^k$ wenn $l\equiv k \mod e$\\ 
-$\beta = q^i \mod p \Rightarrow \beta =$ Erzeugndes modulo p wenn $gcd(p-1,i)=1$ (coprime)\\
-$g$ ist Erzeugendes (generator) modulo $p$, falls die Menge der Elemente $g^i;1 \leq i \leq p-1$ gleich der Menge $\{1,\ldots,p-1\}$ ist.
+$\beta = g^i \mod p \Rightarrow \beta =$ Generator modulo p wenn $gcd(p-1,i)=1$ (coprime)\\
+$g$ ist Generator modulo $p$, falls $g^i;1 \leq i \leq p-1$ die Zahlen $\{1,\ldots,p-1\}$ erzeugt. \\
+Equivalent gilt: $g$ ist ein Generator modulo $p$, falls die Ordnung von $g\mod p$ gleich $p-1$ ist (also $e=p-1$).\\
+Die Anzahl Generatoren modulo $p$ berechnet sich mit $\varphi(p-1)$
 
 \subsection{Chinese Remainder Theorem}
-\begin{minipage}{8cm}
 Wird verwendet um ein Gleichungssystem zu l\"osen: \\
+\begin{minipage}{4cm}
 $x \equiv a_1 \mod m_1$\\
 $x \equiv a_2 \mod m_2$\\
 $\ldots$\\
 $x \equiv a_n \mod m_n$\\
 \end{minipage}
-\begin{minipage}{9cm}
+\begin{minipage}{14cm}
 $m=\displaystyle\prod_{i=1}^{n} m_i, \quad M_i=m/m_i, \quad gcd(m_i, M_i)=1, 1 \leq i \leq n$\\
-$y_iM_i \equiv 1 \mod m_i \to$ \tr{eucl($m_i,M_i$)}{$\{.., y_i,.. \}$}, \\
-$x=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m_1 m_2 \ldots $
+$y_iM_i \equiv 1 \mod m_i \to y_i\equiv M_i^{-1} \mod m_i \to$ \tr{eucl($M_i,m_i$)}{$\{.., y_i,.. \}$}, \\
+$x=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m=\left(\displaystyle\sum_{i=1}^{n} a_i  y_i M_i \right) \mod m $
 \end{minipage}\\
-z.B.\\
+\\
 \begin{minipage}{5cm}
+Beispiel:\\
 $x\equiv a_1 \mod m_1 = 5  \mod 7$\\
-$x\equiv a_1 \mod m_1 = 3  \mod 11$\\
-$x\equiv a_1 \mod m_1 = 10 \mod 13$\\
+$x\equiv a_2 \mod m_2 = 3  \mod 11$\\
+$x\equiv a_3 \mod m_3 = 10 \mod 13$\\
 $x=?$
 \end{minipage}
 \begin{minipage}{5cm}
-$m=m_1 m_2 m3 = 7\cdot 11 \cdot 13 = 1001$\\
+$m=m_1 m_2 m_3 = 7\cdot 11 \cdot 13 = 1001$\\
 $M_1=m/m_1=11 \cdot 13 = 143$\\
-$M_1=m/m_2=7 \cdot 13 = 91$\\
-$M_1=m/m_3=7 \cdot 11 = 77$\\
+$M_2=m/m_2=7 \cdot 13 = 91$\\
+$M_3=m/m_3=7 \cdot 11 = 77$\\
 \end{minipage}
 \begin{minipage}{8cm}
-Mit dem extended euclid: \\
+Mit extended euclid: (e.g. $y_1=exteucl(M_1,m_1)$)\\
 $y_1=5;  y_2=4; y_3=12$; $M_1 y_1 \equiv 1 \mod m_1$\\
+$\bm x\equiv a_1\cdot y_1\cdot M_1+a_2\cdot y_2\cdot M_2+a_3\cdot y_3\cdot M_3 (\mod m)$\\
 $\bm x\equiv 5\cdot5\cdot143+3\cdot4\cdot91+10\cdot12\cdot77 \equiv \bm{894} \mod 1001$\\
-$\Rightarrow 894 \mod 7 \equiv 5; \quad 894 \mod 11 \equiv 3;$ etc.
+Check $\Rightarrow 894 \mod 7 \equiv 5; \quad 894 \mod 11 \equiv 3;$ etc.
 \end{minipage}
 
 \subsection{Faster Exponentiation: Square and Multiply}
 Um den Modulos von grossen Potenzen zu rechnen werden die Potenzen in Zweierpotenzen heruntergebrochen und Schritt für Schritt ausgerechnet:\\
-$g^e=g^{\sum c_i 2^i}=\prod_{i=0}^k \left(g^{2^i}\right)^{e_i}$
+$g^e=g^{\sum c_i 2^i}=\prod_{i=0}^k \left(g^{2^i}\right)^{e_i}=g^{e_0}\cdot\left(g^{e_1}\left(...\left(g^{e_{n-1}}\left(g^{e_n}\right)^2\right)^2...\right)^2\right)^2$
 \begin{aufzaehlung}
 \item Drücke die gegebene Potenz in Zweierpotenzen aus: $e=73=2^0+2^3+2^6$
 \item Berechne die Zweierpotenzen $g^{2^i} \mod m$ und reduziere nach jeder Berechnung: $g=6\Rightarrow$\\ 
-$6^{2^1} \mod 100 = 36;\quad 6^{2^2} \mod 100 \equiv 36^2  \mod 100 \equiv -4;\quad  6^{2^3} \mod 100 \equiv {-4}^2 \mod 100 \equiv 16; \ldots$
-\item Berechne das Produkt der Zweierpotenzen: $6^{2^0}\cdot6^{2^3}\cdot6^{2^6}\mod 100\equiv 36 \cdot 16 \cdot -4 \equiv 16$
+$6^{2^1} \mod 100 = 36;\quad 6^{2^2} \mod 100 \equiv 36^2  \mod 100 \equiv 96;\quad  6^{2^3} \mod 100 \equiv {-4}^2 \mod 100 \equiv 16; \ldots$
+\item Berechne das Produkt der Zweierpotenzen: $6^{2^0}\cdot6^{2^3}\cdot6^{2^6}\mod 100\equiv 36 \cdot 16 \cdot -4 \equiv 16\mod 100$
 \end{aufzaehlung}
-Mit Hilfe des \em Square and Multiply \em wird der Rechenaufwand auf $\log_2(e)$ Potenzen und auf $1/2 \log_2(e)$ Multiplikationen reduziert.
+Mit Hilfe des \em Square and Multiply \em wird der Rechenaufwand auf $\log_2(e)$ Potenzen und auf $1/2 \log_2(e)$ Multiplikationen reduziert. \\
+Falls man beim Berechnen der Zweierpotenzen an die Grenzen des Rechner stösst, dann kann man die Potenz unterteilen und in zwei Schritte berechnen 
+(Bsp. $6^{2^{10}}=(6^{32})^{32} \mod 100$).
 
 \subsection{Glossar}
 \begin{minipage}{12.5cm}
@@ -152,10 +158,18 @@ Mit Hilfe des \em Square and Multiply \em wird der Rechenaufwand auf $\log_2(e)$
 						&	$x^3-x^2+x+1$\\ 
 						&	$x^3-x^2-x-1$\\ 
 \end{tabular}
+\end{minipage} \\
+
+\subsection{Polynom division}
+\begin{minipage}{10.5cm}
+	\includegraphics[width=10cm]{./bilder/polynomdivision.png}\\
 \end{minipage}
-
-
-
-
+\begin{minipage}{8cm}
+	Polynom division can be used to determine whether a given polynomial is irreducible or not, i.e. if the division with any other polynomial (up to the half 
+	order of the dividend polynomial) has a rest $r(X)$ or not. In this example, the calculation is done in $GF(2)$, meaning that negative values are 
+	equivalent to positive values. In this case $r(X)\neq 0$ and the given polynomial is irreducible.\\
+	A polynomial that is not divisible by any polynomial of degree 1 and 2, is also not divisible by any polynomial of higher degree, because a factorization 
+	would yield a divisor of degree 1 or 2, respectively.\\
+\end{minipage}
 
 
