@@ -1,16 +1,20 @@
-
 % Einleitung
-
 \section{Elliptic Curve}
-$y^2=x^3+a\cdot x+b \quad a,b,x,y \in \mathbb{R}$  $\to $ If an elliptic curve contains multiple roots, it cannot be used to form a group.\\
-The negative of a point $P \equiv (x_p, y_p)$ is its reflection on the x-axis $\to$ $-P \equiv (x_p, -y_p)$.\\
-Note: When in $\mathbb{F}_p$, all calculations are done with $\mod p$. Point at infinity $\mathcal{O}$ is additive identity of the elliptic curve group.
+Elliptic curve equation: $y^2=x^3+a\cdot x+b \quad a,b,x,y \in \mathbb{R}$  $\to $
+If an elliptic curve contains multiple roots, it cannot be used to form a group ($\to 4 \cdot a^3 + 27 \cdot b^2 \neq 0$).\\
+The negative of a point $P \equiv (x_p, y_p)$ is its reflection on the x-axis $\to$ $-P \equiv (x_p, -y_p)$.
+Both points lie on the curve.\\
+Note: When in $\mathbb{F}_p$, all calculations are done with $\mod p$.
+The point at infinity $\mathcal{O}$ is the additive identity of the elliptic curve group.
 
 \subsection{Addition}
 \begin{minipage}{12.5cm}
-Add two Points on an Elliptic Curve. This is possible, if $4a^3+27b^2\neq0$
+Add two Points $P,Q$ on an Elliptic Curve. This is possible, if $4a^3+27b^2\neq0$
 (Group patterns possible).\\
-Geometric: 1. line through $P,Q \to$ intersection point $(-R)$. 2. Mirror on x-axes $\to R$.\\  
+Geometric:\\
+1. line through $P,Q \to$ intersection point $(-R)$.\\
+2. Mirror on x-axis $\to R$.\\  
+Formula: $P+Q=R$\\
 
 $m=\begin{cases}
 \frac{3 \cdot x_p^2 + a}{2 \cdot y_P} & $ If $ P = Q\\
@@ -18,7 +22,7 @@ $m=\begin{cases}
 \end{cases}$ 
 
 
-$x_R = m^2 -x_p -x_q$ \\
+$x_R = m^2 -x_p -x_Q$ \\
 $y_R = m(x_P-x_R)-y_p$\\
 $\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = P, \quad P+ (-P) = \mathcal{O}, \quad \mathcal{O}$: point at infinity.\\ 
 
@@ -26,6 +30,17 @@ $\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = 
 \begin{minipage}{5.5cm}
   \includegraphics[width=5.5cm]{./bilder/elipticCurve.png}\\
 \end{minipage} \\
+
+\begin{minipage}{12.5cm}
+\subsection{Doubling P}
+Geometric:\\
+1. tangent line to curve at point $P \to -R$\\
+2. Mirror on x-axis $\to R$\\
+Formula: $P+P=2P=R$
+\end{minipage}
+\begin{minipage}{5.5cm}
+	\includegraphics[width=5.5cm]{./bilder/ellipticCurveDoubling.png}
+\end{minipage}
 
 \subsection{Number of Points and Order of a Point}
 In cryptology elliptic curves with a high number of points are preferred.
@@ -64,46 +79,52 @@ When calculating a new point, if $m\to \infty$ then the new point is at infinity
 						&	$a,b$	&	two elements $a,b \in \mathbb{F}_p$ specifying an elliptic curve $E(\mathbb{F}_p)$ by the equation
 										$E: y^2=x^3+ax+b \mod p$ \\
 						&	$G$		&	a base point $G \equiv (x_g, y_g)$ on $E(\mathbb{F}_p)$\\
-						&	$n$		&	$n$ which is the order of $G \to$ the smallest none-negative number $n$, for which $nG=\mathcal{O}$.\\
-						&			&	order of Point always divides the total number of points.\\
-						&	$h$		& 	$h$ is an integer which is the cofactor $h=\frac{ \#E(\mathbb{F}_p) }{n}$ \\
+						&	$n$		&	$n$ which is the order of $G \to$ the smallest non-negative number $n$, for which $nG=\mathcal{O}$.\\
+						&	$h$		& 	$h$ is an integer which is the cofactor; order of Point always divides the total number of points: $h=\frac{ \#E(\mathbb{F}_p) }{n}$ \\
 \end{tabular}\\
 
 For cryptographic applications the order $n$ of $G$ must be a large prime with $\lceil \log_2(n) \rceil \geq 160$ (bit) and the cofactor $h$
 should be a small number with $\lceil \log_2(h) \rceil \leq 10$ (bit).
 
-\subsection{ECDH Elliptic curve Diffie-Hellman}
+\subsection{ECDH (Elliptic curve Diffie-Hellman)}
 
-\begin{tabular}{l p{14cm}}
+\begin{tabular}{l p{15cm}}
 	1.	&	Alice and Bob agree upon a set of elliptic curve domain parameters $T=(p,a,b,G,n,h)$. \\
-	2.	&	Alice randomly chooses a secret integer $d_A$ in the interval $[1,n-1]$ and computes $Q_A=d_A \cdot G$\\
-	3.	&	Bob randomly chooses a secret integer $d_B$ in the interval $[1,n-1]$ and computes $Q_B=d_B \cdot G$\\
+	2.	&	Alice randomly chooses a secret integer $d_A$ in the interval $[1,n-1]$ and computes $Q_A=d_A \cdot G$.\\
+	3.	&	Bob randomly chooses a secret integer $d_B$ in the interval $[1,n-1]$ and computes $Q_B=d_B \cdot G$.\\
 	4.	&	Alice and Bob exchange $Q_A$ and $Q_B$. The integers $d_A$ and $d_B$ are kept secret.\\
 	5.	&	Alice computes $P_A=d_A \cdot Q_B$. Afterwards, $d_A$ can be deleted. \\
 	6.	&	Bob computes $P_B=d_B \cdot Q_A$. Afterwards, $d_B$ can be deleted. \\
 		&	\\
-		&	The point $P_A$ and $P_B$ are equal, since $P_A=d_A \cdot Q_B = d_A \cdot d_B \cdot G = d_B \cdot Q_A = P_B \to P_A = P_B = P$.\\
+		&	The points $P_A$ and $P_B$ are equal, since $P_A=d_A \cdot Q_B = d_A \cdot d_B \cdot G = d_B \cdot Q_A = P_B \to P_A = P_B = P$.\\
 		&	\\
 	7.	&	If $P \neq \mathcal{O}$ then Alice and Bob take the x-coordinate $x_p$ as the shared key.
 \end{tabular}
 
-\subsection{ECDLP Elliptic Curve Discrete Logarithm Problem}
+Note that the secret keys $d_a$ and $d_b$ are never transmitted over the unsecure channel.
+However, the eavesdropper knows $G$ and $d_a \cdot G$ (and $d_b \cdot G$).
+Thus, the scheme is only secure if it is practically impossible to compute $d_a$ (or $d_b$) from $G$ and $d_a \cdot G$ (or $d_b \cdot G$).
+This problem is known as the ECDLP.
 
-Given an elliptic curve $E(\mathbb{F}_p)$ over a finit field $\mathbb{F}_p$, a point $G$ on that curve and another point $Q$ you know to
-be an integer multiple of $G$. The problem is to find the integer $n$ such $nG=Q$.\\
-The security of elliptic curve cryptography rests on the assumption that the elliptic curve discrete logarithm problem is hard to solve.\\
+\subsection{ECDLP (Elliptic Curve Discrete Logarithm Problem)}
 
-\subsection{ECDSA Elliptic curve Digital Signature Algorithm}
-We start with an elliptic curve $E(\mathbb{F}_p)$ over a finit field $\mathbb{F}_p$, a base point $G$ of order $n$.\\
-To sign the message m, Alice does the following:\\
+Given an elliptic curve $E(\mathbb{F}_p)$ over a finite field $\mathbb{F}_p$, a point $G$ on that curve and another point $Q$ you know to be an integer multiple of $G$.
+The problem is to find the integer $n$ such that $nG=Q$.\\
+The security of elliptic curve cryptography rests on the assumption that the elliptic curve discrete logarithm problem is hard to solve.
+
+\subsection{ECDSA (Elliptic Curve Digital Signature Algorithm)}
+We start with an elliptic curve $E(\mathbb{F}_p)$ over a finite field $\mathbb{F}_p$ and a base point $G$ of order $n$.\\
+To sign the message m, Alice generates a key pair $d_A, Q_A$, where $d_A$ is an integer randomly chosen in the interval $[1,n-1]$.
+She computes the public key $Q_A = d_A \cdot G$.
+Then, Alice does the following:\\
 \begin{tabular}{l l}
 	1. 	&	Select a random integer $k$ with $1 \leq k \leq n-1$. \\
 	2. 	&	Compute $k \cdot G \equiv (x_1, y_1)$. \\
-	3. 	&	Compute $r = x_1 \mod n$. If $r = 0$ then goto step 1.\\
+	3. 	&	Compute $r = x_1 \mod n$. If $r = 0$ then go to step 1.\\
 	4. 	&	Compute $k^{-1} \mod n$.\\
 	5. 	&	Compute $e = Hash(m)$.\\
-	6. 	&	Compute $s=k^{-1} \cdot (e+d_A \cdot r) \mod n$. If $s = 0$ then goto step 1.\\
-	7. 	&	Alice signature for the message $m$ is $(r, s)$.\\
+	6. 	&	Compute $s=k^{-1} \cdot (e+d_A \cdot r) \mod n$. If $s = 0$ then go to step 1.\\
+	7. 	&	Alice'x signature for the message $m$ is $(r, s)$.\\
 \end{tabular}\\
 
 To verify Alice's signature $(r, s)$, Bob must obtain an authentic copy of Alice domain parameters
@@ -111,7 +132,7 @@ and public key $Q_A$. Bob then does the following:\\
 \begin{tabular}{l l}
 	1. 	&	Verify that $r$ and $s$ are integers in the interval $[1, n-1]$.\\
 	2. 	&	Compute $e = Hash(m)$.\\
-	3. 	&	Compute $w = s-1 \mod n$.\\
+	3. 	&	Compute $w = s^{-1} \mod n$.\\
 	4. 	&	Compute $u_1 = e \cdot w \mod n$ and $u_2 = r \cdot w \mod n$.\\
 	5. 	&	Compute $X = u_1 \cdot G + u_2 \cdot Q_A \equiv (x_1, y_1)$.\\
 	6. 	&	If $X = \mathcal{O}$ then reject the signature. Otherwise compute $v = x_1 \mod n$.\\
