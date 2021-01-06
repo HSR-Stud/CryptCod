@@ -3,60 +3,106 @@
 \section{Digital Signature}
 Fundamentals:
 \begin{liste}
-  \item	\textbf{Authentication}: Who sent the message. It's really him?
-  \item \textbf{Integrity}: Is the message still the same what the sender sent.
-  \item \textbf{None-repudiation}: an entity cannot deny having signed it.
+  \item	\textbf{Authentication}: Who sent the message. Is it really him?
+  \item \textbf{Integrity}: Is the message still the same what the sender sent?
+  \item \textbf{Non-Repudiation}: An entity cannot deny having signed it.
 \end{liste}
 
 
 \subsection{RSA  Signature}
-The RSA signature is build as in chapter \ref{sec::CrypCod_Asymmetric Crypto} - \nameref{sec::CrypCod_Asymmetric Crypto} on page 
-\pageref{sec::CrypCod_Asymmetric Crypto}.
+The RSA signature is build as in chapter \ref{sec::CrypCod_Asymmetric Crypto} - \nameref{sec::CrypCod_Asymmetric Crypto} on page \pageref{sec::CrypCod_Asymmetric Crypto}.
+
 \subsubsection{Attacks to RSA Signature}
-\subsubsubsection{Man in the Middle/ Authentication of public key}: 
-Is one of the most common and dangerous attacks. The base of this attacks is that the attacker is sending you his public key and 
-tell you it's the original key. Then he forward all the traffic (key exchange data) from him to the original page. 
-He can now listen to all the crypted traffic.\\
-\subsubsubsection{No message attack}: For this the attacker generate a arbitrary number $s$ an compute the the message $m=s^e\mod n$
-The message $m$ has yet no structure, no useful content, but it's signed by Alice. To avoid this, the message should have some redundancy as hash value,
-checksum, etc.\\
+
+\subsubsubsection{Man-in-the-Middle/ Authentication of public key}: 
+Is one of the most common and dangerous attacks. The base of these attacks is that the attacker is sending you his public key and telling you it's the original key.
+Then he forwards all the traffic (key exchange data) from him to the original page. 
+He can now listen to all the encrypted traffic.
+
+\subsubsubsection{No message attack}: For this the attacker chooses an arbitrary number $s$ (claims it to be RSA-signature of Alice) and computes the message $m=s^e\mod n$.
+The message $m$ has yet no structure, no useful content, but it's signed by Alice.
+To avoid this, the message should have some redundancy as hash value, checksum, etc.
+
 \subsubsubsection{Common modulus attack}: $c_e=m^f \mod n \quad c_f=m^f \mod n$, known: $c_e,c_f,(n,f),(n,e)$ then $1=x \cdot e + y \cdot f$
 $\rightarrow (c_e)^x \cdot (c_f)^y=(m^e)^x \cdot (m^f)^y=m^{ex+yf} \equiv m^1 \mod n$.
 
-\subsubsubsection{Multiplicative Property of RSA}: 
+\subsubsubsection{Multiplicative property of RSA}:
 \begin{aufzaehlung}
 \item The attacker would like Alice to sign message m without showing the true content to her.
 \item He chooses any $m_1$ with $gcd(m_1,n)=1$
 \item He computes $m_2 = m \cdot m_1^{-1} \mod n$
-\item He asks Alice to sign $m_1 \& m_2$ and receives $s_1 \& s_2$
+\item He asks Alice to sign $m_1$,$m_2$ and receives $s_1$,$s_2$
 \item $s=s_1 \cdot s_2 \mod n \equiv (m_1\cdot m_2)^d \mod n \equiv m^d \mod n$ is the valid signature of m
 \end{aufzaehlung}
-Some redundancy in the messages can avoid this attacks. Also Alice should sign some ``random'' messages.
+Some redundancy in the messages can avoid this attacks.
+Also, Alice should sign some ``random'' messages.
 
-\subsection{DSA Digital Signature Algorithm}
+\subsection{Hash Functions}
+A hash function maps binary strings of arbitrary length to binary strings of some fixed length, called hash-values:\\ $h: \{0,1\}^* \mapsto \{0,1\}^n$\\
+Cryptographic hash functions need to fulfil three properties:
+\begin{liste}
+	\item [\-] \textbf{Preimage Resistance:} For a given hash value, it is difficult to find a corresponding input string; $h(m)$ is a one-way function
+	\item [\-] \textbf{Second-Preimage Resistance:} Given an input $m_1$, it is difficult to find a second input $m_2$ such that $h(m_1)=h(m_2)$; also called weak collision resistance
+	\item [\-] \textbf{Collision Resistance:} It is difficult to find two different input strings $m_1$ and $m_2$ such that $h(m_1)=h(m_2)$; also called strong collision resistance
+\end{liste}
+Advantages:
+\begin{liste}
+	\item Only short hash value $h(m)$ must be signed, instead of possibly very long message $m$.
+	\item No-Message-Attack doesn't work, since $h(m)$ is a one-way function.
+	\item Exploiting the multiplicative property is not possible, since $h(m)$ is a one-way function.
+	\item The signed message $m$ cannot be replaced by another message $m^*$, since they would be a collision of the hash function.
+\end{liste}
+Examples:
+\begin{liste}
+	\item Secure Hash Algorithm (SHA)
+	\begin{liste}
+		\item SHA-1: 160-bit hash value, no longer considered secure!
+		\item SHA-2: 224,256,384,512-bit hash value
+	\end{liste}
+	\item Message-Digest algorithm 5 (MD-5)
+	\begin{liste}
+		\item 128-bit hash value, no longer considered secure!
+	\end{liste}
+	\item RACE Integrity Primitives Evaluation Message Digest (RIPEMD)
+	\begin{liste}
+		\item RIPEMD: no longer considered secure!
+		\item RIPEMD-160, RIPEMD-320: considered secure
+	\end{liste}
+\end{liste}
 
-Generate a public key $(\bm {p,q,g,y})$ and the secret key $x:$
+\subsection{MAC (Message Authentication Codes)}
+Use parametrized hash function $\to$ $h_k: \sum^* \to \sum^4, x \to g(x) \oplus k$. $k$ is in this example a 4bit secret key.\\
+Example: $A$ would like to send a message to $B$, which isn't confidential, but sure, that the message wasn't changed during transmission.\\
+\begin{tabular}{l}
+	- $A$ and $B$ exchange a secret key $k$ (strictly spoken, this exchange should be authenticated as well).\\
+	- $A$ sends the message $m$ together with the MAC value $y=h_k(m)$ to $B$.\\
+	- $B$ computes $y'=h_k(m')$ with the received message $m'$. $B$ accepts the message, if $y'=y$.
+\end{tabular}
+
+\subsection{DSA (Digital Signature Algorithm)}
+DSA is a more efficient variant of the ElGamal signature algorithm.\\
+Generate a public key $(\bm {p,q,g,y})$ and the secret key $\bm x$:
 \begin{aufzaehlung}
-\item select a prime number $\bm q$ with exact 160 binary digits $(2^{159}< \bm q < 2^{160})$
-\item select a prime number $\bm p$ between 512 and 1024 binary digits $(2^{511+64t}< \bm p < 2^{512+64t})$
-\item select a number $1< h<\bm p$ and compute $\bm g = h^{\frac{p-1}{q}} \mod p$ if g=1 repeat this step.
-(compute a generator of subgroup of order $q \mod p$)
-\item select a random integer $1 \leq \bm x \leq \bm q-1$
-\item compute $\bm y=\bm g^{\bm x} \mod \bm p$
+\item Select a prime number $\bm q$ with exactly 160 binary digits $(2^{159}< \bm q < 2^{160})$
+\item Choose $t; 0 \leq t \leq 8$ and select a prime number $\bm p$ where $2^{511+64t}< \bm p < 2^{512+64t}$ and $\bm q$ divides $(\bm p-1)$. The length of $\bm q$ is between 512 and 1024 binary digits and is a multiple of 64.
+\item Choose a number $1< h<\bm p$ and compute $\bm g = h^{(\bm p-1) / \bm q} \mod \bm p$ if g=1 repeat this step.
+($\bm g$ is a generator of the subgroup of order $q \mod p$, such that $1<g<p$)
+\item Select a random integer $1 \leq \bm x \leq \bm q-1$
+\item Compute $\bm y=\bm g^{\bm x} \mod \bm p$
 \end{aufzaehlung}
-Sign a hash $h(m):$ and return signature $(\bm {r,s})$
+Sign a public, collision-free hash function $h(m)$ and return signature $(\bm {r,s})$:
 \begin{aufzaehlung}
-\item Select a random integer $0< k<q$
+\item Select a random integer $0< k<\bm q$
 \item $\bm r = (\bm g^k \mod \bm p) \mod \bm q$
-\item $s=(k^{-1} \cdot (h(m) + \bm x\cdot \bm r))\mod \bm q$
+\item $\bm s=(k^{-1} \cdot (h(m) + \bm x\cdot \bm r))\mod \bm q$
 \end{aufzaehlung}
 Verification with public key $(\bm {p,q,g,y})$ and signature $(\bm {r,s})$:
 \begin{aufzaehlung}
-\item check if $\bm r \& \bm s$ is in range $<\bm q$
-\item $w=(s^{-1})\mod\bm q$
+\item Verify that $0<\bm r<\bm q$ and$0<\bm s<\bm q$
+\item $w=(\bm s^{-1})\mod\bm q$
 \item $u_1=( w\cdot h(m)) \mod \bm q$
 \item $u_2=( w \cdot \bm r) \mod\bm q$
-\item $\bm v=((\bm g^{u_1}\bm y^{u_2})\mod \bm  p) \mod \bm q$
+\item $\bm v=((\bm g^{u_1} \cdot \bm y^{u_2})\mod \bm  p) \mod \bm q$
 \item if $\bm v= \bm r \Rightarrow$ Accept it!
 \end{aufzaehlung}
 
@@ -101,14 +147,15 @@ Verification of the signature $(r,s)$
 \textbf{Possible Attacks:} If an attacker knows the randomly chosen integer $k$, he could multiply $s$ with $k$ and would then be able to compute the secret key $a$.
 
 
-\subsection{Public Key Infrastructure-PKI}
+\subsection{Public Key Infrastructure - PKI}
 The \em Public Key Infrastructure \em is used to verify which certificate a user can trust and which not.\\
 \subsubsubsection{Direct Trust}: 
-In this model, a user just trust people which he meed and changed their the public key. \\
-\subsubsubsection{Hierachical Trust}: A \em meta introducer \em (root CA) certify other trusted introducer. The public key of the meta introducer 
-already installed on the web browser, operation system, etc. \\
-\subsubsubsection{Web of Trust}: It's based on references. You have some user you know and \em trust \em and you know that 
-they check the new references quite well. So you'll accept a ceritficate which he accepted also.\\
-Other user you accept the certificate but you trust just \em marginal \em. So a new certificate needs trusted by many such people until you trust it.\\
-Then there are user you doesn't trust (\em untrusted user \em)
+In this model, a user just trusts people which he met and whose public keys he got. \\
+\subsubsubsection{Hierachical Trust}: A \em meta introducer \em (root CA) (CA=Certification Authority) certifies other trusted introducers.
+The public key of the meta introducer is already installed on the web browser, operation system, etc. \\
+\subsubsubsection{Web of Trust}: It's based on references. You have some user you know and \em trust \em and you know that they check the new references quite well.
+So you'll accept a ceritficate which he accepted also.\\
+Other users: you may accept their certificate but you trust only \em marginal \em.
+So a new certificate needs to be trusted by many such people until you trust it.
+Then there are users you don't trust (\em untrusted user \em).
 
