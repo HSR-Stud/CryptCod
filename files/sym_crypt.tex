@@ -103,12 +103,11 @@ The $F$-Function works as follows:
 \item The output bits are permuted again. ($P$-Boxes)
 \end{liste}
 The big disadvantage is, that the DES algorithm just uses a 56bit key.\\
-To avoid this disadvantage the Double DES was developed with the drawback of meet-in-the-middle attack. It works like this:
+To avoid this disadvantage the Double DES was developed with the drawback of man-in-the-middle attack. It works like this:
 \begin{aufzaehlung}
     \item For every possible $DES$ key $k_i$, compute $M_i = DES(C,k_i)$ and store the tuple $(M_i, k_i)$.\\
     \item Loop again through all possible $DES$ keys $k_j$ and compute $N_j = DES^{-1}(C,k-j)$. Check whether $N_j$ 
-    is the same as one of your stored $M_i$. If you find a match, it's pretty likely that you've just 
-    found the two keys you're looking for!\\
+    is the same as one of your stored $M_i$. If you find a match, it's pretty likely that you've just found the two keys you're looking for!\\
     (1. table with $2^{56}$ 64bit keys, 2. table with $2^{56}$ 64bit keys $\to$ $2^{112-64} = 2^{48}$ analogies.)\\
 \end{aufzaehlung}
 Notes:
