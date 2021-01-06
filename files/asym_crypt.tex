@@ -10,6 +10,17 @@
 	Security        & 	The security is based on the assumption that the discrete logarithm $x=\log_{g}(c_1)$ is hard to compute. This assumption will be definitely wrong for quantum computers!!!\\
 									& Possible threat: Man-in-the-Middle attacks\\
 	\hline
+	ElGamal 				& 1. Choose a prime $p$ and generator $g$\\
+	Key generation  & 2. Select a random secret integer $a$ with $1 \leq a \leq p-2$ and compute $A=g^a \mod p$\\
+	 								& 3. The public key is: $(p, g, A)$.\\
+									\cline{2-2}
+	Encryption/Decryption & 1. Select a random secret integer $b$, $1 \leq b \leq p-2$ and compute $B=g^b \mod p$\\
+												& 2. For message $m$, compute the cipher text $c=A^b \cdot m \mod p$\\
+												& 3. The secret message consists of $B$ and $c$\\
+												& 4. The cipher text $c$ can be decrypted with $B^{(p-1-a)} \cdot c$ which yields $m$\\
+									\cline{2-2}
+	Note & Works also in other cyclic groups (elliptic curves). ElGamal is exactly as difficult to break as Diffie-Hellmann.\\
+	\hline
 	RSA public key 					&	$p$ and $q$ are primes (possibly large), compute $n=p\cdot q$\\
 	cryptosystem key				& Encryption key is $e$, decryption key is $d$\\
 	generation:						&	Choose an integer $1<e<\varphi(n)$ such that $gcd(e,\varphi(n))=1$\\
@@ -29,5 +40,5 @@
 									\cline{2-2}
 	Security        & Factoring $n$ is probably the only way to find $d$.\\
 									& Choose $p$ and $q$ properly: chosen at random and independently of each other; reject them if they only have small prime factors; n should be at least 2000 bits (3072 bits has same security level of a symmetric algorithm with key length of 128 bits)\\
-	\hline
+	\hline 
 \end{tabular}
