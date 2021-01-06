@@ -2,7 +2,7 @@
 \label{sec::CrypCod_Asymmetric Crypto}
 \begin{tabular}{|l| p{14.7cm}|}
 	\hline
-	Diffie-Hellmann				 	& 	Choose a large public prime $p$ and a generator $g \in GF(p)$.\\
+	Diffie-Hellman				 	& 	Choose a large public prime $p$ and a generator $g \in GF(p)$.\\
 	Key Exchange					&	1. $A$ chooses a large random integer $x$, computes $g^x \mod p = c_1$ and sends the result to $B$. \\
 									&	2. $B$ chooses a large random integer $y$, computes $g^y \mod p = c_2$ and sends the result to $A$. \\
 									&	3. $A$ and $B$ compute each the secret key: $A: c_2^x \mod p=k $ and $B: c_1^y \mod p=k \to k=g^{xy} \mod p$.\\
@@ -19,7 +19,7 @@
 												& 3. The secret message consists of $B$ and $c$\\
 												& 4. The cipher text $c$ can be decrypted with $B^{(p-1-a)} \cdot c$ which yields $m$\\
 									\cline{2-2}
-	Note & Works also in other cyclic groups (elliptic curves). ElGamal is exactly as difficult to break as Diffie-Hellmann.\\
+	Note & Works also in other cyclic groups (elliptic curves). ElGamal is exactly as difficult to break as Diffie-Hellman.\\
 	\hline
 	RSA public key 					&	$p$ and $q$ are primes (possibly large), compute $n=p\cdot q$\\
 	cryptosystem key				& Encryption key is $e$, decryption key is $d$\\
