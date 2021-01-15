@@ -9,7 +9,7 @@ Definitions:\\
 	 block code			&	$(n,k)$				&	$n$: code symbols\\
 						&						&	$k$: information symbols\\
 						&						&	$n-k$: parity symbols \\
-						&						&   $\hookrightarrow n-k$ check equations.\\
+						&						&   $\hookrightarrow n-k$ parity check equations.\\
 	\hline
 	code word			&	$u=m \cdot G$ 		&	$u$: code word \\
 						&						&   $m$: message \\
@@ -26,14 +26,15 @@ Definitions:\\
 						&	$d(u,v)=w(u+v)$		& \\
 						&	$d(u,0)=w(u)$		& \\
 						&	$d(u,v) \leq d(u,w) + d(w,v)$	& \\
-	minimum				&						&	$d_{min}(C)=min\{d(u,v): u,v \in C, u \neq v \} $\\			
+	minimum				&						&	$d_{min}(C)=min\{d(u,v): u,v \in C, u \neq v \} $ (see hint below table)\\			
 	\hline
-	Error Detection		&	$\epsilon = d_{min}-1$ 		& $\epsilon$: number of detectable error bits \\
-	Error Correction	&	$t=[\frac{d_{min}-1}{2}]$	& $t$: number of correctable error bits\\
+	Error Detection		&	$\varepsilon = d_{min}-1$ 		& $\varepsilon$: number of detectable error bits \\
+	Error Correction	&	$t=\lfloor\frac{d_{min}-1}{2}\rfloor$	& $t$: number of correctable error bits\\
 	\hline
 	Parity Check Matrix	&	$u \cdot H^T = \vec{0}$			& $H$: parity check matrix, $(n-k) \times n$-matrix\\
 						&	$u \cdot H^T = m \cdot G \cdot H^T = \vec{0}$ & only for valid codeword $u$ \\
 						&	$G \cdot H^T = \vec{0}$  \\
+	Systematic Generator Matrix & $G = [P | I_{kxk}] \Rightarrow H = [I_{(n-k)x(n-k)} | P^T]$ & only for systematic form\\
 	\hline
 	Syndrom testing		&	$s=r \cdot H^T$		&	$s$: syndrom \\
 						&	$r = u + e$			&	$e$: error \\
@@ -56,10 +57,11 @@ $\to$ \textbf{Polynom}: $g(x)=1+x^1+x^4+x^5$\\
 \item Every cyclic shift of a code word is an other code word.
 \item Two code words added give a new code word (so, 00..00 and 11..11 is often also a code word)
 \item Generator Matrix $G$ are the linearly independent rows of the code word table.
-\item Using Polynomials to represent a binary vector. \\
+\item Using Polynomials to represent a binary vector:
 	  $u=(u_0, u_1,..u_{n-1}) \leftrightarrow u(X)=u_0 \cdot X^0 + u_1 \cdot X^1 + \ldots + u_{n-1} \cdot X^{n-1}$
-\item Each code word $u$ corresponds to a polynomial $u(X)$ of degree $n-1$
+\item Each code word $u$ corresponds to a polynomial $u(X)$ of degree $n-1$ or less
 \item In a $(n,k)$ cyclic code, there exists only one generator polynomial $g$ of degree $n-k$ with $g_0=1$
+\item Every code polynomial is a multiple of $g(X)$: $u \in C \Rightarrow u(X) = m(X) \cdot g(X)$
 \end{list}
 
 \subsubsection{Systematic Cyclic Codes (7,3)=(n,k)}
@@ -85,22 +87,22 @@ Achtung: in den Aufgaben ist LSB und MSB nicht wie gewohnt!\\
 \subsubsection{Hamming Code}
 $\alpha \to$ roots of the primitive polynomial.\\
 \begin{list}{$\bullet$}{\setlength{\itemsep}{0cm} \setlength{\parsep}{0cm} \setlength{\topsep}{0.1cm}} 
-  \item choose $m \geq 3$ (number of parity check equations)
+  \item Choose $m \geq 3$ (number of parity check equations)
   \item Length of code word $n=2^m-1$
   \item Length of message block $k=n-m$
-  \item The Columns of the parity check matrix contain all integers between $1$ and $2^m-1$ as binary numbers. \\
+  \item The columns of the parity check matrix contain all integers of $GF(2^m)$ except 0 ($1, \ldots, 2^m-1)$ as binary numbers. \\
 		$H=[\ldots] $
   \item Every single bit error pattern yields a distinct syndrom vector
   \item checksum condition $\displaystyle\sum_{j=0}^{n-1}u_j \cdot \alpha^j = 0$
-  \item where is the error:\\
+  \item where is the error:
   		$\displaystyle\sum_{j=0}^{n-1}r_j \cdot \alpha^j = \underbrace{\displaystyle\sum_{j=0}^{n-1}u_j \cdot \alpha^j}_{=0} + \underbrace{\displaystyle\sum_{j=0}^{n-1}e_j \cdot \alpha^j}_{=e_p \cdot \alpha^p}= \underbrace{\alpha^p}_{\text{error position}}$
   \item Parity check matrix: $H=[\alpha^0, \alpha^1, \ldots , \alpha^{n-1}]$
 
 \end{list}
 
-\subsubsection{BCH-Codes - Bose-Chaudhuri-Hocquenghem-Codes}
+\subsubsection{BCH-Codes - Bose-Chaudhuri-Hocquenghem}
 \begin{liste}
-  \item choose a field $GF(2^m)$ for some positive integer m
+  \item Choose a field $GF(2^m)$ for some positive integer m
   \item Let $\alpha$ be a primitive element of this field (root)
   \item A code word consists of $n=2^m-1$ binary digits. $u=(u_0, \ldots, u_{n-1})$
   \item Check sums $\displaystyle\sum_{i=0}^{n-1} u_i \cdot \alpha^{i \cdot q} = 0, \quad q=1,2,\ldots,r$
