@@ -13,18 +13,18 @@ Add two Points $P,Q$ on an Elliptic Curve. This is possible, if $4a^3+27b^2\neq0
 (Group patterns possible).\\
 Geometric:\\
 1. line through $P,Q \to$ intersection point $(-R)$.\\
-2. Mirror on x-axis $\to R$.\\  
+2. Mirror on x-axis $\to R$.\\
 Formula: $P+Q=R$\\
 
 $m=\begin{cases}
 \frac{3 \cdot x_p^2 + a}{2 \cdot y_P} & $ If $ P = Q\\
 \frac{y_P-y_Q}{x_P-x_Q}               & $ If $ P \neq Q, P \neq -Q\\
-\end{cases}$ 
+\end{cases}$
 
 
 $x_R = m^2 -x_p -x_Q$ \\
 $y_R = m(x_P-x_R)-y_p$\\
-$\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = P, \quad P+ (-P) = \mathcal{O}, \quad \mathcal{O}$: point at infinity.\\ 
+$\mathcal{O}+\mathcal{O}=\mathcal{O}, \quad P + \mathcal{O} = \mathcal{O} + P = P, \quad P+ (-P) = \mathcal{O}, \quad \mathcal{O}$: point at infinity.\\
 
 \end{minipage}
 \begin{minipage}{5.5cm}
@@ -70,7 +70,8 @@ For small $p$:  Calculate all the possible points of the curve and add $\mathcal
 	So, in total the given curve has 6 points.\\
 \end{minipage}\\
 
-The order of a point $P$ can be found by point multiplication: $n \cdot P=P+P+...+P$ for $n$ times $\to n$ is the smallest non-negative integer for which $n \cdot P=\mathcal{O}$. 
+The order of a point $P$ can be found by point multiplication: $n \cdot P=P+P+...+P$ for $n$ times $\to n$ is the smallest non-negative integer for which $n \cdot P=\mathcal{O}$.
+The order of a point always divides the total number of points. 
 When calculating a new point, if $m\to \infty$ then the new point is at infinity, i.e. $\mathcal{O}$.\\
 
 \subsection{Elliptic Curve Domain Parameters}
