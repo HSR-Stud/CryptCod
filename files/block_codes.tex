@@ -26,14 +26,15 @@ Definitions:\\
 						&	$d(u,v)=w(u+v)$		& \\
 						&	$d(u,0)=w(u)$		& \\
 						&	$d(u,v) \leq d(u,w) + d(w,v)$	& \\
-	minimum				&						&	$d_{min}(C)=min\{d(u,v): u,v \in C, u \neq v \} $ (see hint below table)\\			
+	minimum				&						&	$d_{min}(C)=min\{d(u,v): u,v \in C, u \neq v \} $\\
+						& & (see hint below table)\\
 	\hline
 	Error Detection		&	$\varepsilon = d_{min}-1$ 		& $\varepsilon$: number of detectable error bits \\
 	Error Correction	&	$t=\lfloor\frac{d_{min}-1}{2}\rfloor$	& $t$: number of correctable error bits\\
 	\hline
 	Parity Check Matrix	&	$u \cdot H^T = \vec{0}$			& $H$: parity check matrix, $(n-k) \times n$-matrix\\
 						&	$u \cdot H^T = m \cdot G \cdot H^T = \vec{0}$ & only for valid codeword $u$ \\
-						&	$G \cdot H^T = \vec{0}$  \\
+						&	$G \cdot H^T = \vec{0}$ & \\
 	Systematic Generator Matrix & $G = [P | I_{kxk}] \Rightarrow H = [I_{(n-k)x(n-k)} | P^T]$ & only for systematic form\\
 	\hline
 	Syndrom testing		&	$s=r \cdot H^T$		&	$s$: syndrom \\
@@ -44,7 +45,7 @@ Definitions:\\
 	\hline
 	$P_{corr}$			&	$P_{corr}=\displaystyle\sum_{i=0}^{n} \alpha_i \cdot p^i \cdot (1-p)^{n-i}$		& $p$: bit error probability\\
 	Prob. of correctly	&																					& $i$: Hamming weight of the pattern\\
-	decoded vector		&																					& $\alpha$: number of pattern with the same Hamming weight\\
+	decoded vector		&																					& $\alpha$: number of patterns with same Hamming weight\\
 	\hline 
 \end{tabular}\\
 Hint: The minimum distance of a linear block code is equal to the minimum weight of its nonzero code words.\\
@@ -125,7 +126,7 @@ If $u \cdot H^T = \vec{0}$, then $u$ is a valid codeword.\\
 Variant 2 (not always applicable):\\
 Example with $u=( 1 0 0 1 1 1 0 )\Rightarrow u(X)=1+X^3+X^4+X^5 \Rightarrow u(\alpha)=1+\alpha^2+1+\alpha^2+\alpha+1+\alpha+1=0 \Rightarrow u$ is a valid codeword. 
 
-\subsection{RS Codes - Reed Solomon}
+\subsection{RS Codes - Reed Solomon}%TODO: CONTINUE
 Reed-Salomon Codes are cyclic $(n, n-2t)$-Codes, which code symbols $u_i$ are not binary digits but elements of $GF(q)$. However, if $q=2^m$, then every code symbol
 can be represented by a binary vector of length m. The number of correctable bits is given by $t$.\\
 
